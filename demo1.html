@@ -24,15 +24,17 @@
 	<audio id="audio" src="tap1.mp3" preload="auto"></audio>
 
 
-	<script type="text/javascript" src="jquery-2.1.1.min.js"></script>
-	
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 	<script src="jquery.mobile-shake-1.0.js"></script>
 	<script>
 		$(document).shakeMobile({
-			// shake_threshold:20,  
-			time_difference:250,
-			callback : function(count){
+			shake_threshold:5,
+			time_difference1:50,
+			time_difference2:500,
+			callback : function(count,speed){
 				$('#num-log span').html(count);
+				$('#audio').get(0).play();
+				$('#speed span').html(speed);
 			}
 		});
 	</script>

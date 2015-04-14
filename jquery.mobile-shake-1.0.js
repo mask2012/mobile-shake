@@ -18,11 +18,15 @@
  */
 
 ;(function($){
+	alert('v1.1')
 	$.fn.shakeMobile = function(o){
 		var defaults = {
-			shake_threshold : 5, //摇动加速度  
+			shake_threshold : 3, //摇动加速度  
 			time_difference1 : 50, //摇动监测时间间隔
-			time_difference2 : 600, //触发后到第二次触发之间的时间间隔
+			time_difference2 : 500, //触发后到第二次触发之间的时间间隔
+			acceptX: true,
+			acceptY: false,
+			acceptZ: false,
 			callback : null
 		};
 		o = $.extend(defaults, o);						
@@ -30,7 +34,8 @@
 		    last_update = 0,
 		    x=y=z=last_x=last_y=last_z=0,
 		    count = 0,
-		    time1=time2=0;;
+		    time1=time2=0,
+		    absX,absY,absZ=0;
 
 		function deviceMotionHandler(eventData) {      
 			var acceleration =eventData.accelerationIncludingGravity;
@@ -44,9 +49,18 @@
 				x = acceleration.x;
 				y = acceleration.y;
 				z = acceleration.z;
-			   
+			    
+			    if(o.acceptX){
+			    	absX=x-last_x
+			    }
+			    if(o.acceptY){
+			    	absY=y-last_y
+			    }
+			    if(o.acceptZ){
+			    	absZ=z-last_z
+			    }
 				// var speed = Math.abs(x +y + z - last_x - last_y - last_z) / diffTime * 10000;     
-				var speed = Math.abs(x-last_x);
+				var speed = Math.abs(absX+absY+absZ);
 				  
 				if (speed > o.shake_threshold) {  //触发后执行
 					time1 = new Date().getTime();
@@ -54,7 +68,7 @@
 
 		        		count++;
 						if(o.callback){
-							o.callback(count);
+							o.callback(count,speed);
 					    }
 					    time2=time1;
 
