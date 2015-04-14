@@ -1,0 +1,119 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8" />
+    <title>摇一摇提示</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=0; ">
+    
+</head>
+<body>
+
+	<div style="position:fixed; left:0; top:0; width:100%; height:100%; background:#ff6; font-size:20px; text-align:center; padding-top:20%; box-sizing:border-box;">开始摇动吧！
+		<div id="num-log">摇动了<span>0</span>次</div>
+		<div id="gapValue">差值为<span></span></div>
+		<div id="timeGap">检测时间间隔为<span></span></div>
+		<div id="gapX">x轴差值为<span></span></div>
+		<div id="speed">加速度为<span></span></div>
+		<div id="t1">time1为<span></span></div>
+		<div id="t2">time2为<span></span></div>
+		<div id="accx">加速度x为<span></span></div>
+		<div id="accy">加速度x为<span></span></div>
+		<div id="accz">加速度x为<span></span></div>
+	</div>
+	
+
+	<audio id="audio" src="tap1.mp3" preload="auto"></audio>
+
+
+	<script type="text/javascript" src="jquery-2.1.1.min.js"></script>
+	
+	<script src="jquery.mobile-shake-1.0.js"></script>
+	<script>
+		$(document).shakeMobile({
+			// shake_threshold:20,  
+			time_difference:250,
+			callback : function(count){
+				$('#num-log span').html(count);
+			}
+		});
+	</script>
+
+	<script>
+		// alert('version1.8');
+		// var SHAKE_THRESHOLD = 5;
+	 //    var last_update = 0;      
+	 //    var x=y=z=last_x=last_y=last_z=0;    
+	 //    var numLog=1;
+	 //  	var time1=time2=0;
+
+	 //  	function isMi2(){
+		//     var ua = window.navigator.userAgent;
+		//     if(ua.match(/MI 2/i) == 'MI 2'){
+		//         return true;
+		//     }else{
+		//         return false;
+		//     }
+		// }
+
+		// if(isMi2()){
+	 //        SHAKE_THRESHOLD=5;
+	 //    }
+
+		// function init(){  
+		// 	if (window.DeviceMotionEvent) {   
+		// 	    window.addEventListener('devicemotion',deviceMotionHandler, false);    
+		// 	     // alert('support mobile event'); 
+		// 	} else{  
+			          
+		// 	    alert('not support mobile event');  
+		// 	}  
+		// }  
+		  
+		//  function deviceMotionHandler(eventData) {      
+		//     var acceleration =eventData.accelerationIncludingGravity;    
+		//     var curTime = new Date().getTime();
+		    
+		//     // alert("curTime="+curTime);
+		//     if ((curTime - last_update)> 50) {
+		//         var diffTime = curTime -last_update;      
+		//         last_update = curTime;
+		//         x = acceleration.x;   
+		//         y = acceleration.y;     
+		//         z = acceleration.z;
+		       
+		//         // var speed = Math.abs(x +y + z - last_x - last_y - last_z) / diffTime * 10000;     
+		//         var speed = Math.abs(x-last_x);
+
+
+		//         $('#gapValue span').html(speed.toFixed(2));
+		//         $('#timeGap span').html(diffTime);
+		          
+		//         if (speed > SHAKE_THRESHOLD) {
+		//         	time1 = new Date().getTime();
+		//         	if((time1-time2)>500){
+		//         		$('#t1 span').html(time1);
+		// 	            $('#t2 span').html(time2);
+		// 	            $('#speed span').html(speed);
+		// 	            $('#accx span').html(x);
+		// 	            $('#accy span').html(x);
+		// 	            $('#accz span').html(x);
+		//         		// $('#audio').get(0).play();
+		// 	            $('#num-log span').html(numLog);
+			            
+		// 	            numLog++;
+		// 	            time2=time1;
+		//         	}
+		        	
+		//         }      
+		        
+		//         last_x = x;      
+		//         last_y = y;      
+		//         last_z = z;      
+	 //        }
+	 //    }
+
+	 //    init();
+
+	</script>
+
+</body>
+</html>
