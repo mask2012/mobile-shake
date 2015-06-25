@@ -3,11 +3,15 @@
     <meta charset="utf-8" />
     <title>摇一摇提示</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" /> 
+	<meta http-equiv="Pragma" content="no-cache" /> 
+	<meta http-equiv="Expires" content="0" />
     
 </head>
 <body>
 
-	<div style="position:fixed; left:0; top:0; width:100%; height:100%; background:#ff6; font-size:20px; text-align:center; padding-top:20%; box-sizing:border-box;">开始摇动吧！
+	<div style="position:fixed; left:0; top:0; width:100%; height:100%; background:#ff6; font-size:20px; text-align:center; padding-top:20%; box-sizing:border-box;">version 13<br>开始摇动吧！
 		<div id="num-log">摇动了<span>0</span>次</div>
 		<div id="absTotal">总加速度为<span></span></div>
 		<div id="accx">加速度x为<span></span></div>
@@ -16,28 +20,59 @@
 		<div id="ya"></div>
 	</div>
 
-	<audio id="audio" src="tap1.mp3" preload="auto"></audio>
+	<audio id="audio-kaka" src="kaka.mp3"></audio>
 
 
 	<script src="jquery-2.1.1.min.js"></script>
-	<script src="jquery.mobile-shake-1.0.js"></script>
+	<script src="util.js"></script>
+	<!-- // <script src="jquery.mobile-shake-1.0.js?a=1"></script> -->
 	<script>
-		$.shakeMobile({
-			shake_threshold:20,
-			time_difference1:50,
-			time_difference2:500,
-			acceptX:true,
-			acceptY:false,
-			acceptZ:false,
-			callback : function(count,speed,absX,absY,absZ){
-				$('#num-log span').html(count);
-				$('#absTotal span').html(speed);
-				$('#accx span').html(absX);
-				$('#accy span').html(absY);
-				$('#accz span').html(absZ);
-				$('#audio').get(0).play();
+	// $.util.mobileConsole(window.navigator.userAgent);
+
+		// $('#audio-kaka')[0].load();
+		// $.shakeMobile({
+		// 	shake_threshold:20,
+		// 	time_difference1:50,
+		// 	time_difference2:500,
+		// 	acceptX:true,
+		// 	acceptY:false,
+		// 	acceptZ:false,
+		// 	callback : function(count,speed,absX,absY,absZ){
+		// 		$('#num-log span').html(count);
+		// 		$.util.alert(speed,1000);
+		// 		$('#audio-kaka')[0].play();
+		// 	}
+		// });
+
+
+		$('#audio-kaka')[0].load();
+		var u = navigator.userAgent, app = navigator.appVersion;
+		var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		var isOver = true;
+		var shake_threshold = 20; 
+		var time_difference1= 60; 
+		$.getScript("jquery.mobile-shake-1.0.js", function(){
+			if (isiOS){
+				shake_threshold = 20;
+				time_difference1 = 50;
 			}
+			$.shakeMobile({
+					shake_threshold:shake_threshold,
+					time_difference1:time_difference1,
+					time_difference2:500,
+					acceptX:true,
+					acceptY:false,
+					acceptZ:false,
+					callback : function(count,speed,absX,absY,absZ){
+						$('#num-log span').html(count);
+						$.util.alert(speed,1000);
+						$('#audio-kaka')[0].play();
+					}
+				});
 		});
+
+
+
 	</script>
 
 </body>

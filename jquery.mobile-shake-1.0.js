@@ -80,6 +80,11 @@
 			    	absZ=Math.abs(z-last_z)
 			    }
 				var absTotal = absX+absY+absZ;
+
+				$('#absTotal span').html(absTotal);
+				$('#accx span').html(absX);
+				$('#accy span').html(absY);
+				$('#accz span').html(absZ);
 				  
 				if (absTotal > o.shake_threshold) {  //触发后执行
 					time1 = new Date().getTime();

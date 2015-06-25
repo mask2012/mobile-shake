@@ -1,0 +1,58 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8" />
+    <title>摇一摇提示</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" /> 
+	<meta http-equiv="Pragma" content="no-cache" /> 
+	<meta http-equiv="Expires" content="0" />
+    
+</head>
+<body>
+
+
+
+	<div style="position:fixed; left:0; top:0; width:100%; height:100%; background:#ff6; font-size:20px; text-align:center; padding-top:20%; box-sizing:border-box;">20<br>开始摇动吧！
+		<div id="num-log">摇动了<span>0</span>次</div>
+		<div id="absTotal">总加速度为<span></span></div>
+		<div id="accx">加速度x为<span></span></div>
+		<div id="accy">加速度y为<span></span></div>
+		<div id="accz">加速度z为<span></span></div>
+	</div>
+
+
+	<script src="jquery-2.1.1.min.js"></script>
+	<script src="util.js"></script>
+	<script src="jquery.mobile-shake-2.0.js?a=2"></script>
+	<script>
+		var a= $.shakeMobile({
+			shake_threshold:20,
+			time_difference1:50,
+			time_difference2:600,
+			acceptX:true,
+			acceptY:true,
+			acceptZ:false,
+			onceCallback : function(count,speed,absX,absY,absZ){
+				$('#num-log span').html(count);
+				$.util.alert('yao!',100);
+			},
+			onceSoundEndCallback : function(){
+				
+			},
+			totalCallback : function(count){
+				$.util.alert('stoped',100);
+			},
+			totalSoundEndCallback : function(){
+				
+			}
+		});
+
+		console.log(a)
+
+
+
+	</script>
+
+</body>
+</html>

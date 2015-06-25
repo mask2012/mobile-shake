@@ -1,0 +1,98 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8" />
+    <title>摇一摇提示</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" /> 
+	<meta http-equiv="Pragma" content="no-cache" /> 
+	<meta http-equiv="Expires" content="0" />
+    
+</head>
+<body>
+
+	<div style="position:fixed; left:0; top:0; width:100%; height:100%; background:#ff6; font-size:20px; text-align:center; padding-top:20%; box-sizing:border-box;">12<br>开始摇动吧！
+		<div id="num-log">摇动了<span>0</span>次</div>
+		<div id="absTotal">总加速度为<span></span></div>
+		<div id="accx">加速度x为<span></span></div>
+		<div id="accy">加速度y为<span></span></div>
+		<div id="accz">加速度z为<span></span></div>
+		<div id="ya"></div>
+	</div>
+
+	<!-- <audio id="audio" src="kaka.mp3" preload="auto"></audio>
+	<audio id="audio-finish" src="duang.mp3" preload="auto"></audio> -->
+
+
+	<!-- <div id="audio-holder" style="display:none;">
+		<audio id="audio-duang" src="duang.mp3"></audio>
+		<audio id="audio-kaka" src="kaka.mp3"></audio>
+	</div> -->
+
+	<audio id="audio" src="kaka.mp3"></audio>
+
+
+
+	<script src="jquery-2.1.1.min.js"></script>
+	<script src="util.js"></script>
+	<!-- // <script src="jquery.mobile-shake-2.0.js?a=1"></script> -->
+	<script>
+	// $.util.mobileConsole(window.navigator.userAgent);
+
+	// $('#audio')[0].load();
+	// $('#audio-finish')[0].load();
+		// $.shakeMobile({
+		// 	shake_threshold:18,
+		// 	// time_difference1:50,
+		// 	time_difference:600,
+		// 	acceptX:true,
+		// 	acceptY:false,
+		// 	acceptZ:false,
+		// 	onceCallback : function(count,speed,absX,absY,absZ){
+		// 		$('#num-log span').html(count);
+		// 		// $('#audio')[0].play();
+		// 	},
+		// 	onceSoundEndCallback : function(){
+				
+		// 	},
+		// 	totalCallback : function(count){
+		// 		$('#absTotal').html('停下来了');
+		// 		// $('#audio-finish')[0].play();
+		// 	},
+		// 	totalSoundEndCallback : function(){
+				
+		// 	}
+		// });
+		
+		$('#audio')[0].load();
+		var u = navigator.userAgent, app = navigator.appVersion;
+		var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		var isOver = true;
+		var shake_threshold = 25; 
+		var time_difference1= 60; 
+		$.getScript("http://cdn.s.weshaketv.com/public/js/jquery.mobile-shake-1.0.js", function(){
+			
+			if (isiOS){
+				shake_threshold = 20;
+				time_difference1 = 50;
+			}
+			$.shakeMobile({
+				shake_threshold:shake_threshold,
+				time_difference1:time_difference1,
+				time_difference2:500,
+				acceptX:true,
+				acceptY:false,
+				acceptZ:false,
+				callback : function(count,speed,absX,absY,absZ){
+					$.util.alert(speed,1000);
+					$('#audio')[0].play();
+				}
+			});
+		});
+
+
+
+	</script>
+
+</body>
+</html>
