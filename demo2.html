@@ -19,6 +19,7 @@
 		<div id="accx">加速度x为<span></span></div>
 		<div id="accy">加速度y为<span></span></div>
 		<div id="accz">加速度z为<span></span></div>
+		<a id="start-it">重新开始</a>
 	</div>
 
 
@@ -26,29 +27,41 @@
 	<script src="util.js"></script>
 	<script src="jquery.mobile-shake-2.0.js?a=2"></script>
 	<script>
-		var a= $.shakeMobile({
+		var shaker= $.shakeMobile({
 			shake_threshold:20,
 			time_difference1:50,
 			time_difference2:600,
 			acceptX:true,
 			acceptY:true,
 			acceptZ:false,
+			playOnceSound:true,
+			playTotalSound:true,
 			onceCallback : function(count,speed,absX,absY,absZ){
 				$('#num-log span').html(count);
-				$.util.alert('yao!',100);
-			},
-			onceSoundEndCallback : function(){
-				
+				$.util.alert('触发摇动!',100);
 			},
 			totalCallback : function(count){
 				$.util.alert('stoped',100);
+				// shaker.stop();
 			},
-			totalSoundEndCallback : function(){
-				
+			onceSoundCallback : function(){
+				$.util.alert('kaka播放完成',100);
+			},
+			totalSoundCallback : function(){
+				$.util.alert('duang播放完成',100);
+				// setTimeout(function(){    //1400毫秒后播放duang
+				// 	$('#start-it').click()
+				// },1400);
+
 			}
 		});
 
-		console.log(a)
+		$('#start-it').click(function() {
+			shaker.start();
+			return false;
+		});
+
+		console.log(shaker)
 
 
 

@@ -27,15 +27,18 @@
 	// alert('v1.1')
 	$.shakeMobile = function(o){
 		var defaults = {
-			shake_threshold  : 20,   //摇动加速度  
-			time_difference1 : 50,  //监测加速度时间间隔
-			time_difference2 : 500, //触发后到第二次触发之间的时间间隔
-			acceptX: true,
-			acceptY: false,
-			acceptZ: false,
-			playSound: true,
-			onceCallback : null,
-			totalCallback:null
+			shake_threshold  : 20,  		//摇动加速度  
+			time_difference1 : 50,  		//监测加速度时间间隔
+			time_difference2 : 500, 		//触发后到第二次触发之间的时间间隔
+			acceptX: true,					//监测x轴
+			acceptY: false,					//监测y轴
+			acceptZ: false,					//监测z轴
+			playOnceSound: true,			//是否播放摇动一次声音
+			playTotalSound: true,			//是否播放摇动一阵后声音
+			onceCallback : function(){},	//摇动一次回调
+			totalCallback : function(){},	//摇动一阵回调
+			onceSoundCallback:function(){},	//摇动一阵回调
+			totalSoundCallback:function(){}	//摇动一阵回调
 		};
 		o = $.extend(defaults, o);						
 		var shake,  
@@ -49,9 +52,6 @@
 		    audio1=null,
 		    audio2=null;
 
-		
-		    
-			
 
 		function isMi2(){
 		    var ua = window.navigator.userAgent;
@@ -91,22 +91,24 @@
 		};
 
 		//处理声音
-		if(o.playSound){
+		if(o.playOnceSound){
 			audio1 = $.util.audio({
 				src:'kaka.mp3',
 				onEnd:function(){
-					
+					o.onceSoundCallback();
 				},
 				onLoad:function(){
 					$.util.alert('kaka loaded',100);
 				}
 			});
+		}
 
+		if(o.playTotalSound){
 			setTimeout(function(){
 				audio2 = $.util.audio({
 					src:'duang.mp3',
 					onEnd:function(){
-						
+						o.totalSoundCallback();
 					},
 					onLoad:function(){
 						$.util.alert('duang loaded',100);
@@ -114,7 +116,8 @@
 				});
 			},800)
 		}
-
+		
+		//一次摇动后监测
 		function bound(speed){
 			var absTotal = speed.x + speed.y + speed.z;
 			if (absTotal > o.shake_threshold) {  //触发后执行
@@ -123,23 +126,20 @@
 	        	if((time1-time2)>o.time_difference2){
 	        		count+=1;
 	        		tempCount[count]=count;
-
+	        		
 	        		startListen(count);
 
-					if(o.onceCallback){
-						o.onceCallback(count,absTotal,speed.x,speed.y,speed.z);
-				    }
+					o.onceCallback(count);
 
 				    audio1.stop();
 				    audio1.play();
 
 				    time2 = time1;
 	        	}
-
 			}
 		}
 
-		//第一次摇动后开始监测
+		//一阵摇动后监测
 		function startListen(arrayIndex){
 			if(listenTimer!=null){
 				clearTimeout(listenTimer);
@@ -151,12 +151,12 @@
 				    }
 				    audio2.play();
 				}
-			},1400);  
+			},1400);
 		}
 
 		function deviceMotionHandler(eventData) {      
 			var curTime = new Date().getTime();    //第一层时间监控设置
-			var diffTime = curTime -last_update;  
+			var diffTime = curTime - last_update;
 			if (diffTime > o.time_difference1) {
 				last_update = curTime;
 				bound(getSpeed(eventData.accelerationIncludingGravity));
@@ -165,24 +165,19 @@
 
 		shake={
 			start: function(){  
-				//监听运动传感事件
-				if (window.DeviceMotionEvent) {   
-					window.addEventListener('devicemotion',deviceMotionHandler, false);    
-				} else{  
-					alert('很抱歉,您的手机不支持摇一摇!');  
-				}
-			}
+				window.addEventListener('devicemotion',deviceMotionHandler, false); 
+			},
 			stop: function(){  
-				//撤销监听运动传感事件
-				if (window.DeviceMotionEvent) {   
-					window.removeEventListener('devicemotion',deviceMotionHandler, false);    
-				} else{  
-					//
-				}
+				window.removeEventListener('devicemotion',deviceMotionHandler, false);
+				last_update = 0;
+			    x=y=z=last_x=last_y=last_z=0;
+			    time1=time2=0;
+			    absX=absY=absZ=0;
+			    listenTimer=null;
 			}
 		}
 		
-		start();//初始化
+		shake.start();//初始化
 
 		return shake;
 	}
