@@ -33,8 +33,10 @@
 			acceptX: true,					//监测x轴
 			acceptY: false,					//监测y轴
 			acceptZ: false,					//监测z轴
+			// playOnceSrc: 'images/kaka.mp3'  //一次摇动声音
+			// playTotalSrc:'images/duang.mp3' //一阵摇动声音
 			playOnceSound: true,			//是否播放摇动一次声音
-			playTotalSound: true,			//是否播放摇动一阵后声音
+			playTotalSound: false,			//是否播放摇动一阵后声音
 			onceCallback : function(){},	//摇动一次回调
 			totalCallback : function(){},	//摇动一阵回调
 			onceSoundCallback:function(){},	//摇动一阵回调
@@ -93,25 +95,27 @@
 		//处理声音
 		if(o.playOnceSound){
 			audio1 = $.util.audio({
-				src:'kaka.mp3',
+				src:'http://1251097942.cdn.myqcloud.com/1251097942/public/kaka.mp3',
 				onEnd:function(){
 					o.onceSoundCallback();
 				},
 				onLoad:function(){
-					$.util.alert('kaka loaded',100);
+					// $.util.alert('kaka loaded',100);
 				}
 			});
+
+			
 		}
 
 		if(o.playTotalSound){
 			setTimeout(function(){
 				audio2 = $.util.audio({
-					src:'duang.mp3',
+					src:'http://1251097942.cdn.myqcloud.com/1251097942/public/duang.mp3',
 					onEnd:function(){
 						o.totalSoundCallback();
 					},
 					onLoad:function(){
-						$.util.alert('duang loaded',100);
+						// $.util.alert('duang loaded',100);
 					}
 				});
 			},800)
@@ -169,11 +173,6 @@
 			},
 			stop: function(){  
 				window.removeEventListener('devicemotion',deviceMotionHandler, false);
-				last_update = 0;
-			    x=y=z=last_x=last_y=last_z=0;
-			    time1=time2=0;
-			    absX=absY=absZ=0;
-			    listenTimer=null;
 			}
 		}
 		

@@ -35,20 +35,20 @@
 			acceptY:true,
 			acceptZ:false,
 			playOnceSound:true,
-			playTotalSound:true,
+			playTotalSound:false,
 			onceCallback : function(count,speed,absX,absY,absZ){
 				$('#num-log span').html(count);
-				$.util.alert('触发摇动!',100);
+				// $.util.alert('触发摇动!',100);
 			},
 			totalCallback : function(count){
-				$.util.alert('stoped',100);
+				// $.util.alert('stoped',100);
 				// shaker.stop();
 			},
 			onceSoundCallback : function(){
-				$.util.alert('kaka播放完成',100);
+				// $.util.alert('kaka播放完成',100);
 			},
 			totalSoundCallback : function(){
-				$.util.alert('duang播放完成',100);
+				// $.util.alert('duang播放完成',100);
 				// setTimeout(function(){    //1400毫秒后播放duang
 				// 	$('#start-it').click()
 				// },1400);
