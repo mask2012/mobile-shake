@@ -65,8 +65,10 @@
 		}
 
 		if(isMi2()){
-	        o.shake_threshold/=2;
+	        o.shake_threshold/=1;
 	    }
+
+	    alert(1)
 
 		function getSpeed(acceleration){
 			var absX = 0,
