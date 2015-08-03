@@ -52,7 +52,8 @@
 		    absX=absY=absZ=0,
 		    listenTimer=null,
 		    audio1=null,
-		    audio2=null;
+		    audio2=null,
+		    mute=false;
 
 
 		function isMi2(){
@@ -67,8 +68,6 @@
 		if(isMi2()){
 	        o.shake_threshold/=1;
 	    }
-
-	    alert(1)
 
 		function getSpeed(acceleration){
 			var absX = 0,
@@ -137,8 +136,10 @@
 
 					o.onceCallback(count);
 
-				    audio1.stop();
-				    audio1.play();
+					if(!mute){
+					    audio1.stop();
+					    audio1.play();
+				    }
 
 				    time2 = time1;
 	        	}
@@ -155,7 +156,10 @@
 					if(o.totalCallback){
 						o.totalCallback(count);
 				    }
-				    audio2.play();
+				    if(!mute){
+				    	audio2.play();
+				    }
+				    // count=0;
 				}
 			},1400);
 		}
@@ -175,6 +179,13 @@
 			},
 			stop: function(){  
 				window.removeEventListener('devicemotion',deviceMotionHandler, false);
+			},
+			toggleMute:function(){
+				if(!mute){   //如果没有静音
+					mute=true;
+				}else{
+					mute=false;
+				}
 			}
 		}
 		

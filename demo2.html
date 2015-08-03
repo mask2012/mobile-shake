@@ -19,30 +19,31 @@
 		<div id="accx">加速度x为<span></span></div>
 		<div id="accy">加速度y为<span></span></div>
 		<div id="accz">加速度z为<span></span></div>
-		<a id="start-it">重新开始</a>
+		<a id="start-it">重新开始</a><br>
+		<a id="toggle-music">静音开关</a>
 	</div>
 
 
 	<script src="jquery-2.1.1.min.js"></script>
 	<script src="util.js"></script>
-	<script src="jquery.mobile-shake-2.0.js?a=2"></script>
+	<script src="jquery.mobile-shake-2.0.js"></script>
 	<script>
 		var shaker= $.shakeMobile({
 			shake_threshold:20,
 			time_difference1:50,
-			time_difference2:600,
+			time_difference2:500,
 			acceptX:true,
 			acceptY:true,
 			acceptZ:false,
 			playOnceSound:true,
-			playTotalSound:false,
+			playTotalSound:true,
 			onceCallback : function(count,speed,absX,absY,absZ){
 				$('#num-log span').html(count);
 				// $.util.alert('触发摇动!',100);
 			},
 			totalCallback : function(count){
 				// $.util.alert('stoped',100);
-				alert(count);
+				// alert(count);
 				// shaker.stop();
 			},
 			onceSoundCallback : function(){
@@ -61,6 +62,15 @@
 			shaker.start();
 			return false;
 		});
+
+
+		$('#toggle-music').click(function() {
+			shaker.toggleMute();
+			return false;
+		});
+
+
+		
 
 		console.log(shaker)
 
