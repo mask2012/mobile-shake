@@ -1,30 +1,29 @@
 /*
- * jquery.mobile-shake-1.0.js
+ * jquery.mobile-shake-2.0.js
  *
  * Copyright 2015 Mask
  * Free to use and abuse under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
  *
  *
- //deviceMotion：封装了运动传感器数据的事件，可以获取手机运动状态下的运动加速度等数据
-//DeviceMotionEvent(设备运动事件)返回设备有关于加速度和旋转的相关信息；加速度的数据将包含三个轴：x，y和z；该事件会返回两个属性，accelerationIncludingGravity(含重力的加速度)和acceleration(加速度)，后者排除了重力的影响
-
 调用方法
 	$.shakeMobile({
-		shake_threshold : 5,    //摇动总加速度,值太小过于敏感，值太大过于迟钝，单方向iphone一般为20左右，小米2为5
+		shake_threshold : 20,    //摇动总加速度,值太小过于敏感，值太大过于迟钝，单方向iphone一般为20左右，小米2为5
 		time_difference1 : 50,  //摇动监测时间间隔
-		time_difference2 : 600, //触发后到第二次触发之间的时间间隔,如果太小会造成一次摇动触发多次
+		time_difference2 : 500, //触发后到第二次触发之间的时间间隔,如果太小会造成一次摇动触发多次
 		acceptX: true,          //是否监测x轴摇动
 		acceptY: false,			//是否监测y轴摇动
 		acceptZ: false,			//是否监测z轴摇动
-		callback : function(count,speed,absX,absY,absZ){
-			// action here
-		}
+		playOnceSound: true,			//是否播放摇动一次声音
+		playTotalSound: false,			//是否播放摇动一阵后声音
+		onceCallback : function(){},	//摇动一次回调
+		totalCallback : function(){},	//摇动一阵回调
+		onceSoundCallback:function(){},	//摇动一阵回调
+		totalSoundCallback:function(){}	//摇动一阵回调
 	});
  *
  */
 ;(function($){
-	// alert('v1.1')
 	$.shakeMobile = function(o){
 		var defaults = {
 			shake_threshold  : 20,  		//摇动加速度  
